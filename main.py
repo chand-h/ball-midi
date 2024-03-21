@@ -5,7 +5,7 @@ import math
 
 SUBFRAMES = 1
 SPEED = 0.125
-BALL_CT = 13
+BALL_CT = 34
 SLOMO = 0.5
 GRAVITY = 0.5
 
@@ -70,22 +70,22 @@ chords = {
     #'thirteenth': [0, 4, 7, 10, 14, 17, 21, 12, 16, 19, 22, 26], # Thirteenth chord
 }
 
-
-name, current_scale = random.choice(list(chords.items()))
+current_scale = chords['major_seventh']
+#name, current_scale = random.choice(list(chords.items()))
 root_note = 60
 
 # Load MIDI file and extract notes
-midi_file = mido.MidiFile('canonpiano.mid')
+#midi_file = mido.MidiFile('canonpiano.mid')
 port = mido.open_output('BallsMidi 1')  # Open a MIDI output port
 # Process MIDI file and group notes by their timestamps
 from collections import defaultdict
 midi_notes_grouped_by_time = defaultdict(list)
 current_time = 0
-for msg in midi_file:
-    if not msg.is_meta:
-        current_time += msg.time
-        if msg.type == 'note_on':
-            midi_notes_grouped_by_time[current_time].append(msg.note)
+# for msg in midi_file:
+#     if not msg.is_meta:
+#         current_time += msg.time
+#         if msg.type == 'note_on':
+#             midi_notes_grouped_by_time[current_time].append(msg.note)
 
 note_times = sorted(midi_notes_grouped_by_time.keys())
 current_note_time_index = 0
@@ -163,13 +163,13 @@ gray = (77, 77, 77)
 
 import colorsys
 def generate_color():
-    hue = random.random()
+    hue = random.choice((0,0.1,0.3,0.6,0.7,0.8))
 
     # High saturation: 80% to 100%
-    saturation = 0.8 + random.random() * 0.2
+    saturation = 1
 
     # High value: 80% to 100%
-    value = 0.8 + random.random() * 0.2
+    value = 1
 
     # Convert HSV to RGB
     r, g, b = colorsys.hsv_to_rgb(hue, saturation, value)
